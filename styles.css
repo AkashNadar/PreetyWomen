@@ -4,80 +4,385 @@
   box-sizing: border-box;
 }
 
-.hide {
-  display: none;
-}
-
 body {
-  padding: 2rem;
   width: 100%;
   min-height: 100vh;
-  background-image: linear-gradient(to right bottom, #cffafe, #22d3ee);
+  min-height: 100dvh;
+  padding: clamp(1rem, 4vw, 2rem);
+
+  background-image: linear-gradient(to right bottom,
+      #cffafe,
+      #22d3ee);
+
   display: flex;
   flex-direction: column;
+
+  overflow: hidden;
 }
 
+/* -------------------- */
+/* Utility              */
+/* -------------------- */
+
+.hide {
+  display: none !important;
+}
+
+/* -------------------- */
+/* Header Image         */
+/* -------------------- */
+
 .header-img {
-  display: flex;
-  width: 100%;
-  max-width: 600px;
-  margin-inline: auto;
+  display: block;
+  width: min(100%, 600px);
+  height: auto;
+  margin: 0 auto;
+
   filter: drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.2));
 }
 
+/* -------------------- */
+/* Main Container       */
+/* -------------------- */
+
 .container {
-  flex: 1;
   position: relative;
   isolation: isolate;
+
+  flex: 1;
+
   width: 100%;
   max-width: 1200px;
-  margin-inline: auto;
+  min-height: 400px;
+
+  margin: 0 auto;
 }
+
+/* -------------------- */
+/* Center Images        */
+/* -------------------- */
 
 .image-1,
 .image-2 {
   position: absolute;
+
   top: 50%;
   left: 50%;
+
   transform: translate(-50%, -50%);
+
+  height: auto;
+
+  max-width: 80vw;
 }
 
 .image-1 {
-  width: 175px;
+  width: min(175px, 40vw);
 }
 
 .image-2 {
-  width: 250px;
+  width: min(250px, 55vw);
 }
+
+/* -------------------- */
+/* Buttons              */
+/* -------------------- */
 
 .btn {
   position: absolute;
+
   top: calc(100% - 5rem);
+
   min-width: 120px;
+
   padding: 0.75rem 1rem;
-  font-size: 1.25rem;
+
+  font-size: clamp(1rem, 3vw, 1.25rem);
+
   outline: none;
   border: none;
+
   background-color: #f8fafc;
+
   border-radius: 5px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+
+  box-shadow:
+    5px 5px 10px rgba(0, 0, 0, 0.1);
+
   cursor: pointer;
-  transition: 0.3s;
+
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 .btn:hover {
   background-color: #e2e8f0;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+
+  box-shadow:
+    5px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Yes */
+
 .btn-yes {
-  left: 50%;
-  transform: translateX(calc(-100% - 1rem));
+  left: calc(50% - 0.5rem);
+
+  transform: translateX(-100%);
+
   z-index: 1;
 }
 
+/* No */
+
 .btn-no {
-  left: calc(50% + 1rem);
+  left: calc(50% + 0.5rem);
+
   transition: all 0.5s ease;
+
   z-index: 2;
+}
+
+/* -------------------- */
+/* Fade Animation       */
+/* -------------------- */
+
+.fade-in {
+  opacity: 0;
+
+  animation:
+    fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* -------------------- */
+/* Sunflowers           */
+/* -------------------- */
+
+#sunflower-container {
+  position: fixed;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+  z-index: 9999;
+}
+
+.sunflower {
+  position: absolute;
+
+  top: -60px;
+
+  max-width: 60px;
+  height: auto;
+
+  animation:
+    fall linear forwards;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% {
+    transform:
+      translateY(-60px) rotate(0deg);
+
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translateY(110vh) rotate(360deg);
+
+    opacity: 0;
+  }
+}
+
+/* -------------------- */
+/* Tablet               */
+/* -------------------- */
+
+@media (max-width: 768px) {
+
+  body {
+    padding: 1.25rem;
+  }
+
+  .header-img {
+    width: min(100%, 500px);
+  }
+
+  .container {
+    min-height: 350px;
+  }
+
+  .btn {
+    top: calc(100% - 4.5rem);
+
+    min-width: 110px;
+
+    padding: 0.7rem 0.9rem;
+  }
+
+  .image-1 {
+    width: min(160px, 42vw);
+  }
+
+  .image-2 {
+    width: min(220px, 55vw);
+  }
+}
+
+/* -------------------- */
+/* Mobile               */
+/* -------------------- */
+
+@media (max-width: 480px) {
+
+  body {
+    padding: 1rem;
+
+    /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+  }
+
+  .header-img {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .container {
+    min-height: 320px;
+  }
+
+  .image-1 {
+    width: min(145px, 45vw);
+  }
+
+  .image-2 {
+    width: min(200px, 55vw);
+  }
+
+  .btn {
+    min-width: 100px;
+
+    padding: 0.65rem 0.8rem;
+
+    font-size: 1rem;
+  }
+
+  .btn-yes {
+    left: calc(50% - 0.35rem);
+  }
+
+  .btn-no {
+    left: calc(50% + 0.35rem);
+  }
+
+  .sunflower {
+    max-width: 45px;
+  }
+}
+
+/* -------------------- */
+/* Very Small Phones    */
+/* -------------------- */
+
+@media (max-width: 360px) {
+
+  body {
+    padding: 0.75rem;
+  }
+
+  .container {
+    min-height: 280px;
+  }
+
+  .image-1 {
+    width: 125px;
+  }
+
+  .image-2 {
+    width: 175px;
+  }
+
+  .btn {
+    min-width: 90px;
+
+    padding: 0.6rem 0.7rem;
+
+    font-size: 0.95rem;
+  }
+}
+
+.frt-img {
+  display: block;
+  width: auto;
+  height: auto;
+
+  max-width: 500px;
+  max-height: 25vh;
+
+  object-fit: contain;
+
+  margin: 0 auto;
+
+  filter: drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.2));
+}
+
+@media (max-width: 480px) {
+  .frt-img {
+    max-width: 90vw;
+    max-height: 25vh;
+  }
+}
+
+.preetywomen {
+  display: block;
+
+  width: auto;
+  height: auto;
+
+  max-width: 500px;
+  max-height: 25vh;
+
+  object-fit: contain;
+
+  margin: 0 auto;
+  margin-top: 2%;
+
+  filter: drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.2));
+}
+
+@media (max-width: 480px) {
+  .preetywomen {
+    max-width: 90vw;
+    max-height: 25vh;
+    margin-top: 10%;
+  }
 }
